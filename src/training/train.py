@@ -1,13 +1,13 @@
 import torch
 import torch.nn as nn
 import torch.optim as optim
-from tqdm import tqdm
+from tqdm import tqdm 
 
 from src.datasets.cifar100 import loadData
 from src.models.resnet18 import Resnet18
 
 
-def train_one_epoch(model, loader, criterion, optimizer, device):
+def trainOneEpoch(model, loader, criterion, optimizer, device):
     model.train()
     total_loss, total_correct, total_samples = 0, 0, 0
 
@@ -59,7 +59,7 @@ def evaluate(model, loader, criterion, device):
 
 def main():
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    print("Using device:", device)
+    print("device:", device)
 
 
     train_loader, val_loader, _ = loadData(batch=128)
@@ -73,7 +73,7 @@ def main():
 
 
     for epoch in range(3):
-        tr_loss, tr_acc = train_one_epoch(model, train_loader, criterion, optimizer, device)
+        tr_loss, tr_acc = trainOneEpoch(model, train_loader, criterion, optimizer, device)
         va_loss, va_acc = evaluate(model, val_loader, criterion, device)
         print(f"epoch {epoch+1}: "
               f"train {tr_acc:.2f}% (loss {tr_loss:.4f}) | "
