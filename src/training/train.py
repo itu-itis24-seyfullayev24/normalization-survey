@@ -14,19 +14,13 @@ def trainOneEpoch(model, loader, criterion, optimizer, device):
     for images, labels in tqdm(loader, desc="train", ncols=80):
         images, labels = images.to(device), labels.to(device)
 
-
         logits = model(images)
         loss = criterion(logits, labels)
-
-
         optimizer.zero_grad()
         loss.backward()
-
-
         optimizer.step()
-
-
         total_loss += loss.item() * labels.size(0)
+
         preds = logits.argmax(dim=1)
         total_correct += (preds == labels).sum().item()
         total_samples += labels.size(0)
@@ -59,7 +53,7 @@ def evaluate(model, loader, criterion, device):
 
 def main():
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    print("device:", device)
+    print("the device u're using:", device)
 
 
     train_loader, val_loader, _ = loadData(batch=128)
