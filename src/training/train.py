@@ -51,9 +51,11 @@ def evaluate(model, loader, criterion, device):
     return avg_loss, avg_acc
 
 
+
+
 def main():
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    print("the device u're using:", device)
+    print("the device you're using:", device)
 
 
     train_loader, val_loader, _ = loadData(batch=128)

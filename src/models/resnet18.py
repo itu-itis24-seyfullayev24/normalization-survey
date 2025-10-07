@@ -34,7 +34,7 @@ class Resnet18(nn.Module):
         self.backbone.avgpool.register_forward_hook(_hook)
 
     def forward(self, x, return_features: bool = False):
-        logits = self.backbone(x)  # hook fills self._feat
+        logits = self.backbone(x)
         if return_features:
             return logits, self._feat
         return logits
@@ -42,8 +42,7 @@ class Resnet18(nn.Module):
 
 if __name__ == "__main__":
     model = Resnet18()
-    # CIFAR-sized input for realism; 224x224 also works
     x = torch.randn(1, 3, 32, 32)
-    y, f = model(x, return_features=True)  # <-- correct flag name
-    print("logits:", y.shape)    # torch.Size([1, 100])
-    print("features:", f.shape)  # torch.Size([1, 512])
+    y, f = model(x, return_features=True)
+    print("logits:", y.shape)
+    print("features:", f.shape)

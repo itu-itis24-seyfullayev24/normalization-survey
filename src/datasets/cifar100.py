@@ -1,7 +1,31 @@
 import torch
+import os, csv, random, numpy as np, torch
 import torch.nn as nn
 from torch.utils.data import DataLoader, random_split
 from torchvision import datasets, transforms
+
+# This function adds vector normalization techniques. With epsilon added in order to avoid any division by zero.
+
+def vector_norm(x: torch.Tensor, ord: str, eps: float = 1e-6) ->  torch.Tensor:
+    v = x.view(-1)
+    if ord == "l1":
+        s = v.abs().sum()
+    elif ord == "l2":
+        s = torch.sqrt(v.pow(2).sum())
+    elif ord == "linf":
+        s = v.abs().max()
+    else:
+        raise ValueError(f"Unknown ord: {ord}")
+
+    s = s.clamp(min=eps)
+    return v / s
+
+
+def transforms():
+
+    l1_normalize = torch.nn.functional.normalize(ord, )
+
+
 
 def loadData(batch=128, valid=5000, workers=2, seed=42):
     transform = transforms.ToTensor()
